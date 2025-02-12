@@ -31,9 +31,12 @@ public class CustomPersistenceUnitInfo implements PersistenceUnitInfo {
     @Override
     public DataSource getJtaDataSource() {
         HikariDataSource dataSource = new HikariDataSource();
+
+        /* In most cases, you don't generally put your environment data like that. */
         dataSource.setJdbcUrl("jdbc:postgresql://localhost:5432/jpa");
         dataSource.setUsername("postgres");
         dataSource.setPassword("");
+
         return dataSource;
     }
 
@@ -59,7 +62,7 @@ public class CustomPersistenceUnitInfo implements PersistenceUnitInfo {
 
     @Override
     public List<String> getManagedClassNames() {
-        return List.of("org.example.entities.Product");
+        return List.of("org.example.entities.Product", "org.example.entities.Employee");
     }
 
     @Override
