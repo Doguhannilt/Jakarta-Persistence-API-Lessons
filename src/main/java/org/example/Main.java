@@ -3,6 +3,8 @@ package org.example;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.example.entities.Employee;
+import org.example.entities.Stock;
+import org.example.entities.Student;
 import org.example.persistence.CustomPersistenceUnitInfo;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 
@@ -31,7 +33,7 @@ public class Main {
             create-drop: drop the schema when the SessionFactory is closed explicitly, typically when the application is stopped.
             none: does nothing with the schema, makes no changes to the database
         */
-        props.put("hibernate.hbm2ddl.auto", "none");
+        props.put("hibernate.hbm2ddl.auto", "create");
 
         // The following code (commented out) shows an alternate method where you would use the default
         // "persistence.xml" configuration file instead of programmatically creating the EntityManagerFactory.
@@ -88,14 +90,20 @@ public class Main {
             * If you're using a default mapping, Hibernate fetches all basic attributes and initializes all to-one associations.
             * The getReference method returns a reference to an entity object.
             */
-            Employee employeeProp2 = entityManager.find(Employee.class, 2);
-            Employee reference = entityManager.getReference(Employee.class, 2);
-            System.out.println(employeeProp2);
-            System.out.println(reference);
+            // Employee employeeProp2 = entityManager.find(Employee.class, 2);
+            // Employee reference = entityManager.getReference(Employee.class, 2);
+            // System.out.println(employeeProp2);
+            // System.out.println(reference);
 
             // Reload all the data.
-            entityManager.refresh(employeeProp2);
+            // entityManager.refresh(employeeProp2);
 
+
+            Stock stock = new Stock();
+            stock.setCode("abc");
+            stock.setNumber(10);
+            stock.setColor("Rosso");
+            entityManager.persist(stock);
 
             // Commit the transaction. This is where all the changes (if any) are flushed to the database.
             // If there were no changes, the commit just marks the transaction as successful.
